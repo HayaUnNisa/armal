@@ -1,0 +1,56 @@
+@font-face { font-family: "Fustat"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("./assets/fonts/fustat-arabic-wght-normal.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC; }
+@font-face { font-family: "Fustat"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("./assets/fonts/fustat-latin-wght-normal.woff2") format("woff2"); }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+  body { @apply bg-white font-sans text-revolver antialiased; }
+  ::selection { background: #DB232E; color: #fff; }
+  :focus-visible { outline: 2px solid #DB232E; outline-offset: 2px; border-radius: 4px; }
+  /* Brand guide: Bold for headlines, Regular for body, ExtraBold only for facts & numbers */
+  h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { letter-spacing: 0; }
+  input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-10; }
+  .fact { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .eyebrow { @apply inline-flex items-center gap-2.5 text-[13px] font-bold text-alizarin; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .select { @apply w-full appearance-none rounded-lg border border-snow-dark bg-white px-3.5 py-3 text-[15px] text-revolver outline-none transition focus:border-alizarin; }
+  .input { @apply w-full rounded-lg border border-snow-dark bg-white px-3.5 py-3 text-[15px] text-revolver outline-none transition placeholder:text-snow-darkest focus:border-alizarin; }
+}
+
+/* "Roof" button: red fills in on the diagonal, like the logo's roof line */
+.btn-roof { position: relative; overflow: hidden; isolation: isolate; }
+.btn-roof::before {
+  content: ""; position: absolute; inset: -2px; z-index: -1; background: var(--fill, #961522);
+  clip-path: polygon(0 100%, 0 100%, 0 100%); transition: clip-path .55s cubic-bezier(.22,1,.36,1);
+}
+.btn-roof:hover::before { clip-path: polygon(0 100%, 0 -120%, 220% 100%); }
+[dir="rtl"] .btn-roof:hover::before { clip-path: polygon(100% 100%, 100% -120%, -120% 100%); }
+[dir="rtl"] .btn-roof::before { clip-path: polygon(100% 100%, 100% 100%, 100% 100%); }
+
+/* Faint brand pattern (house icons), taken from the stationery mockup */
+.pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.06' stroke-width='3'%3E%3Cpath d='M20 40 L45 22 L70 40'/%3E%3Cpath d='M26 62 a19 19 0 0 1 38 0 v26 h-24 a14 14 0 0 1 -14 -14 z'/%3E%3Cpath d='M90 110 L115 92 L140 110' transform='translate(-20 0)'/%3E%3Cpath d='M76 132 a19 19 0 0 1 38 0' /%3E%3C/g%3E%3C/svg%3E");
+}
+.pattern-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%2338383A' stroke-opacity='.05' stroke-width='3'%3E%3Cpath d='M20 40 L45 22 L70 40'/%3E%3Cpath d='M26 62 a19 19 0 0 1 38 0 v26 h-24 a14 14 0 0 1 -14 -14 z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@keyframes scan { 0% { transform: translateY(-30%); } 100% { transform: translateY(130%); } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn-roof::before { transition: none; }
+}
+
+/* range thumbs for the price slider */
+.range-thumb::-webkit-slider-thumb { -webkit-appearance: none; pointer-events: auto; height: 22px; width: 22px; border-radius: 9999px; background: #fff; border: 3px solid #DB232E; box-shadow: 0 4px 12px rgba(0,0,0,.2); cursor: grab; }
+.range-thumb::-moz-range-thumb { pointer-events: auto; height: 18px; width: 18px; border-radius: 9999px; background: #fff; border: 3px solid #DB232E; cursor: grab; }
+.range-thumb::-webkit-slider-runnable-track { background: transparent; }
